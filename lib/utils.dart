@@ -19,13 +19,12 @@ class Event {
   
   @override
   String toString() => title1+'\n'+content1+'\n'+title2+'\n'+content2+'\n'+title3+'\n'+content3;
+  
 
-  // Container toContainer() {
-  //   return Container(
-  //     child: Column(children: [
-  //       Text(title1)
-  //     ],),
-  //   );
+  // Column toContainer() {
+  //   return Column(children: [
+  //     Text(title1)
+  //   ],);
   // }
 }
 

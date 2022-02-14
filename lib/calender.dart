@@ -6,9 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-
-
-import '../utils.dart';
+import 'utils.dart';
 
 class Main_Calender extends StatefulWidget {
   const Main_Calender({Key? key}) : super(key: key);
@@ -211,8 +209,8 @@ class _Main_CalenderState extends State<Main_Calender> {
               markerBuilder: (context, date, list){
                 
                 if (list.isEmpty) return Container();
-                if (date == _selectedDay) 
-                return Positioned(
+                if (date == _selectedDay) {
+                  return Positioned(
                   top: 0,
                   child: Container(
                         width: 54,
@@ -220,6 +218,7 @@ class _Main_CalenderState extends State<Main_Calender> {
                         child: const Image(image: AssetImage('assets/soso_icon/Icon_blue1.png'),)
                       ),
                 );
+                }
                 return Positioned(
                   top: 6,
                   child: Container(
@@ -307,11 +306,8 @@ class _Main_CalenderState extends State<Main_Calender> {
                         // border: Border.all(),
                         // borderRadius: BorderRadius.circular(12.0),
                       // ),
-                      // child: Container(
-                      //   child: Text('여기에 카테고리별 리스트 출력'),
-                      // ),
                       child: ListTile(
-                        // onTap: () => print('${value[index]}'),
+                        onTap: () => print('${value[index]}'),
                         title: Text('${value[0]}',style: const TextStyle(
                           fontFamily: 'Medium',
                           fontSize: 16,
