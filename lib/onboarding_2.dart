@@ -27,7 +27,7 @@ class _onboarding_2State extends State<onboarding_2> {
             decoration: BoxDecoration(
                 shape: BoxShape.circle, color: const Color(0xffFCDA9D)),
             alignment: Alignment.center,
-            margin: EdgeInsets.fromLTRB(0, 100, 0, 78),
+            margin: EdgeInsets.fromLTRB(0, 132, 0, 78),
             child: SizedBox(
                 width: 150.0,
                 height: 150.0,
@@ -37,7 +37,7 @@ class _onboarding_2State extends State<onboarding_2> {
             alignment: Alignment.center,
             margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: Text(
-              '안녕하세요!\n저는 당신의 소소한 회고를 돕는 소소 라고 해요!\n',
+              '안녕하세요!\n저는 당신의 소소한 회고를 돕는\n 소소 라고 해요!\n',
               textAlign: TextAlign.center,
               //textAlign: TextAlign.center,
               style: TextStyle(
