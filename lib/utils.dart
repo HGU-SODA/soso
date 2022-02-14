@@ -1,15 +1,32 @@
+// Copyright 2019 Aleksander Woźniak
+// SPDX-License-Identifier: Apache-2.0
+
 import 'dart:collection';
 
+import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 /// Example event class.
 class Event {
-  final String title;
+  final String title1 = '1. 오늘 진행한 일';
+  final String title2 = '2. 잘한 점';
+  final String title3 = '3. 개선할 점';
+  String content1;
+  String content2;
+  String content3;
 
-  const Event(this.title);
-
+   Event(this.content1,this.content2,this.content3);
+  
   @override
-  String toString() => title;
+  String toString() => title1+'\n'+content1+'\n'+title2+'\n'+content2+'\n'+title3+'\n'+content3;
+
+  // Container toContainer() {
+  //   return Container(
+  //     child: Column(children: [
+  //       Text(title1)
+  //     ],),
+  //   );
+  // }
 }
 
 /// Example events.
@@ -20,15 +37,16 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
-final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
-    value: (item) => List.generate(
-        item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
+final _kEventSource = { for (var item in List.generate(50, (index) => index)) DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5) : List.generate(
+        item % 4 + 1, (index) => Event('1','2','3')) }
   ..addAll({
     kToday: [
-      Event('Today\'s Event 1'),
-      Event('Today\'s Event 2'),
+      Event('1','2','3'),
+      // Event('1','2','3'),
     ],
+    kFirstDay: [
+      Event('1','2','3-2')
+    ]
   });
 
 int getHashCode(DateTime key) {
