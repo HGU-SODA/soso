@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'calender.dart';
 import 'writing_page.dart';
+import 'onboarding_1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +21,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  writing_page()
+      debugShowCheckedModeBanner: false,
+      home:  
+      // onboarding_1()
+      const Main_Calender()
+      // const writing_page()
       // MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -68,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     child: ElevatedButton(
       onPressed: (){}, 
       style: ElevatedButton.styleFrom(
-        primary: Color(0xffECECEC)
+        primary: const Color(0xffECECEC)
       ),
       child: const Text(
         '오늘의 회고 적으러 가기',
