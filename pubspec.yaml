@@ -65,6 +65,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/soso_icon/
+    - assets/soso_character/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -91,6 +93,7 @@ flutter:
       fonts:
         - asset: fonts/JGaegujaengyi-Medium.otf     
             
+
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
