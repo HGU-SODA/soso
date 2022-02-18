@@ -96,7 +96,7 @@ class ham extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(bottom: 4),
             ),
             ListTile(
               title: Row(
@@ -126,7 +126,7 @@ class ham extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(bottom: 4),
             ),
 
             ListTile(
@@ -157,7 +157,7 @@ class ham extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(bottom: 4),
             ),
             ListTile(
               title: Row(
@@ -187,7 +187,7 @@ class ham extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 8),
+              padding: EdgeInsets.only(bottom: 4),
             ),
             Center(
               child: SizedBox(
@@ -195,7 +195,7 @@ class ham extends StatelessWidget {
                   child:
                       Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
             ),
-            Container(
+            /* Container(
               padding: const EdgeInsets.fromLTRB(22, 24, 225, 430),
               child: TextButton(
                 onPressed: () {
@@ -210,7 +210,7 @@ class ham extends StatelessWidget {
                       fontFamily: 'Medium', fontSize: 16, color: Colors.red),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
       ),

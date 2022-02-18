@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:soso/mypage_1.dart';
 import 'calender.dart';
 import 'writing_page.dart';
 import 'onboarding_1.dart';
 import 'onboarding_2.dart';
 import 'onboarding_3.dart';
 import 'onboarding_4.dart';
+import 'ham.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,13 +22,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: onboarding_4()
-        // MyHomePage(title: 'Flutter Demo Home Page'),
-        );
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: onboarding_3(),
+      // MyHomePage(title: 'Flutter Demo Home Page'),
+    );
   }
 }
 
@@ -100,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Color(0xffFCDA9D),
       ),
       child: Image.asset(
-        'assets/soso1.png',
+        'assets/soso_character/soso main.png',
       ),
     );
   }
