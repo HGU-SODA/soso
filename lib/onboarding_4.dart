@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
+import 'calender.dart';
 
 class onboarding_4 extends StatefulWidget {
   const onboarding_4({Key? key}) : super(key: key);
@@ -18,44 +19,55 @@ class _onboarding_4State extends State<onboarding_4> {
       // appBar: AppBar(
       //   title: Text(widget.title),
       // ),
-      body: Center(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 170, 0, 30),
-            child: Image.asset('assets/soso_main.png'),
-          ), //소소 넣는 거
+      body: Stack(children: [
+        const Image(
+          image: AssetImage('assets/bg2.png'),
+          fit: BoxFit.cover,
+        ),
+        Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 170, 0, 30),
+                child: Image.asset('assets/soso_character/soso_main.png'),
+              ), //소소 넣는 거
 
-          const Text(
-            '수고하셨습니다, 은비님👏🏻\n이제 정말 회고를 시작해봐요!',
-            textAlign: TextAlign.center,
-            //textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: 'Medium',
-              fontSize: 24,
-              color: Colors.black,
-            ),
-          ),
-
-          Container(
-            margin: EdgeInsets.only(top: 66),
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                '회고 시작하기',
+              const Text(
+                '환영해요, 은비님!',
+                textAlign: TextAlign.center,
+                //textAlign: TextAlign.center,
                 style: TextStyle(
-                  decoration: TextDecoration.underline,
                   fontFamily: 'Medium',
                   fontSize: 24,
                   color: Colors.black,
                 ),
               ),
-            ),
-          ),
-        ]
-            // mainAxisAlignment: MainAxisAlignment.center,
 
-            ),
-      ),
+              Container(
+                margin: const EdgeInsets.only(top: 66),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Main_Calender()),
+                    );
+                  },
+                  child: const Text(
+                    '회고 시작하기',
+                    style: const TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontFamily: 'Medium',
+                      fontSize: 24,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            // crossAxisAlignment: CrossAxisAlignment.center,
+          ),
+        ),
+      ]),
     );
   }
 }

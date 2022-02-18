@@ -17,6 +17,8 @@ class Main_Calender extends StatefulWidget {
 }
 
 class _Main_CalenderState extends State<Main_Calender> {
+  GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
+
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
@@ -128,6 +130,9 @@ class _Main_CalenderState extends State<Main_Calender> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldState,
+      // appBar: AppBar(backgroundColor: Colors.transparent,),
+      drawer: DrawerSection(context),
       body: Stack(children: [
         const Image(
           image: AssetImage('assets/bg2.png'),
@@ -150,11 +155,15 @@ class _Main_CalenderState extends State<Main_Calender> {
             const SizedBox(
               height: 40,
             ),
+            
             Container(
                 margin: const EdgeInsets.only(left: 10),
                 alignment: Alignment.centerLeft,
                 child:
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.menu))),
+                    IconButton(onPressed: () {
+                      _scaffoldState.currentState!.openDrawer();
+
+                    }, icon: const Icon(Icons.menu))),
             calendar_section(),
             const SizedBox(height: 45.0),
             list_section(),
@@ -167,6 +176,170 @@ class _Main_CalenderState extends State<Main_Calender> {
     );
   }
 
+  Drawer DrawerSection(BuildContext context) {
+    return Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            // 프로젝트에 assets 폴더 생성 후 이미지 2개 넣기
+            // pubspec.yaml 파일에 assets 주석에 이미지 추가하기
+            ListTile(
+              contentPadding: const EdgeInsets.fromLTRB(22, 45, 35, 33),
+              title: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Image(image:
+                    AssetImage('assets/soso_character/soso_main.png'),
+                    height: 56,
+                    width: 56,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 16),
+                  ),
+                  Text(
+                    '은비',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: 'Bold',
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            const Center(
+              child: SizedBox(
+                  width: 283,
+                  child:
+                      Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
+            ),
+            ListTile(
+              title: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Text(
+                    '질문들',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Bold',
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 4),
+            ),
+            ListTile(
+              title: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Image(image:
+                    AssetImage('assets/components/folder.png'),
+                    height: 16,
+                    width: 16,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 12),
+                  ),
+                  Text(
+                    '진행한 일',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Medium',
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 4),
+            ),
+            ListTile(
+              title: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Image(image:
+                    AssetImage('assets/components/folder.png'),
+                    height: 16,
+                    width: 16,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 12),
+                  ),
+                  Text(
+                    '잘한 점/아쉬운 점',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Medium',
+                    ),
+                  )
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 4),
+            ),
+            ListTile(
+              title: Row(
+                children: const [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Image(image:
+                    AssetImage('assets/components/folder.png'),
+                    height: 16,
+                    width: 16,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(right: 12),
+                  ),
+                  Text(
+                    '개선할 점',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Medium',
+                    ),
+                  ),
+                ],
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 4),
+            ),
+            const Center(
+              child: SizedBox(
+                  width: 283,
+                  child:
+                      Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
+            ),
+          ],
+        ),
+      );
+  }
+
   Expanded list_section() {
     return Expanded(
       child: ValueListenableBuilder<List<Event>>(
@@ -175,7 +348,7 @@ class _Main_CalenderState extends State<Main_Calender> {
           return ListView.builder(
             itemCount: value.length,
             itemBuilder: (context, index) {
-              return value.isEmpty
+              return (false)
                   ? Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 12.0,
@@ -183,9 +356,9 @@ class _Main_CalenderState extends State<Main_Calender> {
                       ),
                       child: ListTile(
                         title: Column(
-                          children: const [
-                            Text('data'),
-                            Image(
+                          children:  [
+                            Text(value.toString()),
+                            const Image(
                               image: AssetImage(
                                   'assets/soso_character/soso_main.png'),
                             ),
@@ -261,53 +434,6 @@ class _Main_CalenderState extends State<Main_Calender> {
                       ),
                     );
 
-              // if(value.isEmpty){
-              //   return Container(
-              //     margin: const EdgeInsets.symmetric(
-              //     horizontal: 12.0,
-              //     vertical: 4.0,
-              //   ),
-              //     child: ListTile(
-              //       title: Column(children: const [
-              //         Text('data'),
-              //         Image(image: AssetImage('assets/soso_character/soso_main.png'),),
-
-              //       ],),
-              //     ),
-              //   );
-              // }
-              // else {
-              //   return Container(
-              //   margin: const EdgeInsets.symmetric(
-              //     horizontal: 12.0,
-              //     vertical: 4.0,
-              //   ),
-              //   child: ListTile(
-              //     title: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         Text(
-              //         value[index].title1,
-              //         style: const TextStyle(fontFamily: 'Bold',fontSize: 20,color: Colors.black),),
-              //         const SizedBox(height: 8,),                              Text(value[index].content1,
-              //         style: const TextStyle(fontFamily: 'Medium',fontSize: 16,color: Color(0xff3E3E3E)),),
-              //         const SizedBox(height: 45,),
-              //         Text(value[index].title2,
-              //         style: const TextStyle(fontFamily: 'Bold',fontSize: 20,color: Colors.black),),
-              //         const SizedBox(height: 8,),
-              //         Text(value[index].content2,
-              //         style: const TextStyle(fontFamily: 'Medium',fontSize: 16,color: Color(0xff3E3E3E)),),
-              //         const SizedBox(height: 45,),
-              //         Text(value[index].title3,
-              //         style: const TextStyle(fontFamily: 'Bold',fontSize: 20,color: Colors.black),),
-              //         const SizedBox(height: 8,),
-              //         Text(value[index].content3,
-              //         style: const TextStyle(fontFamily: 'Medium',fontSize: 16,color: Color(0xff3E3E3E)),),
-              //       ],
-              //     ),
-              //   ),
-              // );
-              // }
             },
           );
         },
@@ -323,7 +449,7 @@ class _Main_CalenderState extends State<Main_Calender> {
         return Dialog(
             backgroundColor: const Color(0xffFFFFFE),
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             child: Stack(children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
