@@ -21,7 +21,7 @@ class _onboarding_2State extends State<onboarding_2> {
       //   title: Text(widget.title),
       // ),
       body: Stack(children: [
-        Image(
+        const Image(
           image: AssetImage('assets/bg2.png'),
           fit: BoxFit.cover,
         ),
@@ -34,17 +34,19 @@ class _onboarding_2State extends State<onboarding_2> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle, color: const Color(0xffFCDA9D)),
               alignment: Alignment.center,
-              margin: EdgeInsets.fromLTRB(138, 155, 137, 42),
+
+              margin: const EdgeInsets.fromLTRB(138, 155, 137, 42),
+
               child: SizedBox(
                   width: 150.0,
                   height: 150.0,
                   child: Image.asset(
-                      'assets/soso_character/soso main.png')), //소소 넣는 거
+                      'assets/soso_character/soso_main.png')), //소소 넣는 거
             ),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Text(
+              margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: const Text(
                 '안녕하세요!\n저는 당신의 소소한 회고를 돕는\n 소소 라고 해요!\n',
                 textAlign: TextAlign.center,
                 //textAlign: TextAlign.center,
@@ -59,7 +61,7 @@ class _onboarding_2State extends State<onboarding_2> {
             ),
             Container(
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 '제가 당신을 어떻게\n 불러드리면 좋을까요?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -77,30 +79,30 @@ class _onboarding_2State extends State<onboarding_2> {
                 //padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                         width: 150,
                         child: TextField(
-                            decoration: new InputDecoration(
+                            decoration: InputDecoration(
                           border: InputBorder.none,
                         ))),
                     Container(
-                      padding: EdgeInsets.only(left: 28),
+                      padding: const EdgeInsets.only(left: 28),
                       child: IconButton(
                         iconSize: 40,
-                        icon: Image.asset('assets/pencil_m.png'),
+                        icon: Image.asset('assets/components/pencil_m.png'),
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => onboarding_3()),
+                                builder: (context) => const onboarding_3()),
                           );
                         },
                       ),
                     ),
                   ],
                 ),
-                decoration:
-                    BoxDecoration(border: Border(bottom: BorderSide(width: 1))),
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(width: 1))),
               ),
             ),
             Container(
@@ -109,10 +111,11 @@ class _onboarding_2State extends State<onboarding_2> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => onboarding_4()),
+                    MaterialPageRoute(
+                        builder: (context) => const onboarding_4()),
                   );
                 },
-                child: Text(
+                child: const Text(
                   '완료',
                   style: TextStyle(
                     decoration: TextDecoration.underline,

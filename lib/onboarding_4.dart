@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
+import 'calender.dart';
 
 class onboarding_4 extends StatefulWidget {
   const onboarding_4({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _onboarding_4State extends State<onboarding_4> {
       //   title: Text(widget.title),
       // ),
       body: Stack(children: [
-        Image(
+        const Image(
           image: AssetImage('assets/bg2.png'),
           fit: BoxFit.cover,
         ),
@@ -28,7 +29,7 @@ class _onboarding_4State extends State<onboarding_4> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 170, 0, 30),
-                child: Image.asset('assets/soso_character/soso main.png'),
+                child: Image.asset('assets/soso_character/soso_main.png'),
               ), //소소 넣는 거
 
               const Text(
@@ -43,12 +44,18 @@ class _onboarding_4State extends State<onboarding_4> {
               ),
 
               Container(
-                margin: EdgeInsets.only(top: 66),
+                margin: const EdgeInsets.only(top: 66),
                 child: TextButton(
-                  onPressed: () {},
-                  child: Text(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Main_Calender()),
+                    );
+                  },
+                  child: const Text(
                     '회고 시작하기',
-                    style: TextStyle(
+                    style: const TextStyle(
                       decoration: TextDecoration.underline,
                       fontFamily: 'Medium',
                       fontSize: 24,

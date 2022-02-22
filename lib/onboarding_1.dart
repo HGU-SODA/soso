@@ -20,16 +20,16 @@ class _onboarding_1State extends State<onboarding_1> {
       //   title: Text(widget.title),
       // ),
       body: Stack(children: [
-        Image(
+        const Image(
           image: AssetImage('assets/bg2.png'),
           fit: BoxFit.cover,
         ),
         Center(
           child: Column(children: [
             Container(
-              margin: EdgeInsets.fromLTRB(0, 134, 0, 6),
+              margin: const EdgeInsets.fromLTRB(0, 134, 0, 6),
               alignment: Alignment.center,
-              child: Text(
+              child: const Text(
                 'soso',
                 style: TextStyle(fontFamily: 'Medium', fontSize: 60),
               ),
@@ -38,10 +38,10 @@ class _onboarding_1State extends State<onboarding_1> {
             ),
             Container(
               alignment: Alignment.center,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 66),
-              child: Text(
+              margin: const EdgeInsets.fromLTRB(0, 0, 0, 66),
+              child: const Text(
                 '소다의 소소한 기록',
-                style: TextStyle(fontFamily: 'Medium', fontSize: 24),
+                style: const TextStyle(fontFamily: 'Medium', fontSize: 24),
               ),
               width: 165.0,
               height: 24.0,
@@ -54,16 +54,17 @@ class _onboarding_1State extends State<onboarding_1> {
                   shape: BoxShape.circle, color: const Color(0xffFCDA9D)),
               alignment: Alignment.center,
               margin: EdgeInsets.fromLTRB(0, 0, 0, 78),
+
               child: SizedBox(
                   width: 150.0,
                   height: 145.0,
                   child: Image.asset(
-                      'assets/soso_character/soso main.png')), //소소 넣는 거
+                      'assets/soso_character/soso_main.png')), //소소 넣는 거
             ),
             Container(
               alignment: Alignment.center,
               child: TextButton(
-                child: Text(
+                child: const Text(
                   '시작하기',
                   style: TextStyle(
                     fontFamily: 'Medium',
@@ -75,7 +76,8 @@ class _onboarding_1State extends State<onboarding_1> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => onboarding_2()),
+                    MaterialPageRoute(
+                        builder: (context) => const onboarding_2()),
                   );
                 },
               ),

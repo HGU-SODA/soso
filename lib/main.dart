@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:soso/mypage_1.dart';
+import 'package:soso/splash_screen.dart';
 import 'calender.dart';
 import 'writing_page.dart';
 import 'onboarding_1.dart';
@@ -10,6 +11,12 @@ import 'onboarding_2.dart';
 import 'onboarding_3.dart';
 import 'onboarding_4.dart';
 import 'ham.dart';
+import 'package:soso/work_list.dart';
+import 'calender.dart';
+import 'writing_page.dart';
+import 'onboarding_1.dart';
+import 'splash_screen.dart';
+import 'package:soso/main.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,8 +33,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: onboarding_3(),
-      // MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Splash_Screen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -71,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         height: 45,
         child: ElevatedButton(
             onPressed: () {},
-            style: ElevatedButton.styleFrom(primary: Color(0xffECECEC)),
+            style: ElevatedButton.styleFrom(primary: const Color(0xffECECEC)),
             child: const Text(
               '오늘의 회고 적으러 가기',
               style: TextStyle(color: Colors.black, fontSize: 18),
