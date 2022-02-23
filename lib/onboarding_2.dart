@@ -1,12 +1,23 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:soso/onboarding_3.dart';
 import 'package:soso/onboarding_4.dart';
 
 class onboarding_2 extends StatefulWidget {
-  const onboarding_2({Key? key}) : super(key: key);
+   onboarding_2({Key? key}) : super(key: key);
 
+static String? _ttext = '' ;
+
+  static get ttext{
+    return _ttext;
+  }
+  set setText(String a){
+    _ttext = a;
+  }
+
+  static String getText(){
+    return ttext;
+  }
   // final String title;
 
   @override
@@ -14,6 +25,9 @@ class onboarding_2 extends StatefulWidget {
 }
 
 class _onboarding_2State extends State<onboarding_2> {
+   final controller = TextEditingController();
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,30 +89,23 @@ class _onboarding_2State extends State<onboarding_2> {
               Center(
                 child: Container(
                   width: 234,
-                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: Row(
                     children: [
-                      const SizedBox(
-                          width: 150,
-                          child: TextField(
-                            textAlign: TextAlign.right,
-                            style: TextStyle(fontFamily: 'Medium', fontSize: 28),
-                              decoration:  InputDecoration(
-                            border: InputBorder.none,
-                          ))),
-                      Container(
-                        padding: const EdgeInsets.only(left: 28),
-                        child: IconButton(
-                          iconSize: 40,
-                          icon: Image.asset('assets/components/pencil_m.png'),
-                          onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => const onboarding_4()),
-                            // );
-                          },
-                        ),
+                       Expanded(
+                         child: Container(
+                           margin: const EdgeInsets.only(left: 30),
+                           child: TextField(
+                             controller: controller,
+                             textAlign: TextAlign.center,
+                             style: const TextStyle(fontFamily: 'Medium', fontSize: 28),
+                               decoration:  const InputDecoration(
+                             border: InputBorder.none,
+                           )),
+                         ),
+                       ),
+                      const Image(
+                        image: AssetImage('assets/components/pencil_m.png'),
                       ),
                     ],
                   ),
@@ -112,7 +119,7 @@ class _onboarding_2State extends State<onboarding_2> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const onboarding_4()),
+                      MaterialPageRoute(builder: (context) =>  onboarding_4(name: controller.text,)),
                     );
                   },
                   child: const Text(

@@ -9,11 +9,13 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'utils.dart';
 import 'work_list.dart';
+import 'onboarding_2.dart';
 
 class Main_Calendar extends StatefulWidget {
-  const Main_Calendar({Key? key, required DateTime dday}) : _dday =dday, super(key: key);
+  const Main_Calendar({Key? key, required DateTime dday, required String? name}) : _dday = dday,_name = name, super(key: key);
 
   final DateTime? _dday;
+  final String? _name;
 
   @override
   Main_CalendarState createState() => Main_CalendarState();
@@ -190,21 +192,21 @@ class Main_CalendarState extends State<Main_Calendar> {
           ListTile(
             contentPadding: const EdgeInsets.fromLTRB(22, 45, 35, 33),
             title: Row(
-              children: const [
-                Padding(
+              children:  [
+                const Padding(
                   padding: EdgeInsets.only(left: 10),
                 ),
-                Image(
+                const Image(
                   image: AssetImage('assets/soso_character/soso_main.png'),
                   height: 56,
                   width: 56,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(right: 16),
+                const Padding(
+                  padding: const EdgeInsets.only(right: 16),
                 ),
                 Text(
-                  '은비',
-                  style: TextStyle(
+                  '${widget._name}',
+                  style: const TextStyle(
                     fontSize: 24,
                     fontFamily: 'Bold',
                   ),
@@ -376,13 +378,13 @@ class Main_CalendarState extends State<Main_Calendar> {
                   Container(
                     width: 120,
                     height: 120,
-                    margin: EdgeInsets.symmetric(vertical: 30),
+                    margin: const EdgeInsets.symmetric(vertical: 30),
                     child: const Image(
                       image: AssetImage('assets/soso_character/soso_main.png'),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 18, 0, 12),
+                    margin: const EdgeInsets.fromLTRB(0, 18, 0, 12),
                     child: const Text('오늘의 회고가 아직 등록되지 않았어요!',
                     style: TextStyle(
                                         fontFamily: 'Medium', fontSize: 20,color: Color(0xff50555C))),
@@ -401,6 +403,7 @@ class Main_CalendarState extends State<Main_Calendar> {
                             MaterialPageRoute(
                                 builder: (context) => writing_page(
                                       date: _selectedDay,
+                                      name: widget._name,
                                     )),
                           );
                           
@@ -740,7 +743,7 @@ class Main_CalendarState extends State<Main_Calendar> {
           return Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 4),
+                margin: const EdgeInsets.symmetric(vertical: 4),
                 width: 40,
                 height: 40,
                 child: (_getEventsForDay(day).isEmpty)
@@ -774,7 +777,7 @@ class Main_CalendarState extends State<Main_Calendar> {
           return Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 4),
+                margin: const EdgeInsets.symmetric(vertical: 4),
                 width: 40,
                 height: 40,
                 child: (_getEventsForDay(day1).isEmpty)
@@ -800,7 +803,7 @@ class Main_CalendarState extends State<Main_Calendar> {
           return Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 4),
+                margin: const EdgeInsets.symmetric(vertical: 4),
                 width: 40,
                 height: 40,
                 child: (_getEventsForDay(day1).isEmpty)
@@ -906,6 +909,7 @@ class Main_CalendarState extends State<Main_Calendar> {
                       MaterialPageRoute(
                           builder: (context) => writing_page(
                                 date: _selectedDay,
+                                name: widget._name,
                               )),
                     );
                   },
@@ -929,7 +933,7 @@ class Main_CalendarState extends State<Main_Calendar> {
           return Column(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 0),
+                margin: const EdgeInsets.symmetric(vertical: 0),
                 width: 48,
                 height: 48,
               ),

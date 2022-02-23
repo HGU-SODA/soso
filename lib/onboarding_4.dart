@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'calendar.dart';
+import 'onboarding_2.dart';
 
 class onboarding_4 extends StatefulWidget {
-  const onboarding_4({Key? key}) : super(key: key);
+   onboarding_4({Key? key,  required final String name}) : _name = name, super(key: key);
 
+ String _name ;
   // final String title;
 
   @override
@@ -16,9 +18,6 @@ class _onboarding_4State extends State<onboarding_4> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
       body: Stack(children: [
         const Image(
           image: AssetImage('assets/bg2.png'),
@@ -32,11 +31,12 @@ class _onboarding_4State extends State<onboarding_4> {
                 child: Image.asset('assets/soso_character/soso_main.png'),
               ), //소소 넣는 거
 
-              const Text(
-                '환영해요, 은비님!',
+               Text(
+                 '환영해요, '+ widget._name+'님!',
+                // '환영해요, ${widget._name}님!',
                 textAlign: TextAlign.center,
                 //textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Medium',
                   fontSize: 24,
                   color: Colors.black,
@@ -49,12 +49,12 @@ class _onboarding_4State extends State<onboarding_4> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  Main_Calendar(dday: DateTime.now(),)),
+                      MaterialPageRoute(builder: (context) =>  Main_Calendar(dday: DateTime.now(),name: widget._name,)),
                     );
                   },
                   child: const Text(
                     '회고 시작하기',
-                    style: const TextStyle(
+                    style: TextStyle(
                       decoration: TextDecoration.underline,
                       fontFamily: 'Medium',
                       fontSize: 24,

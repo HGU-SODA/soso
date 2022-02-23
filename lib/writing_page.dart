@@ -9,9 +9,11 @@ import 'utils.dart';
 
 class writing_page extends StatefulWidget {
     const writing_page({Key? key, 
-    required DateTime? date
-    }) : _date = date, super(key: key);
+    required DateTime? date,
+    required String? name
+    }) : _name = name, _date = date, super(key: key);
   final DateTime? _date;
+  final String? _name;
   
 
   @override
@@ -49,7 +51,7 @@ class _writing_pageState extends State<writing_page> {
     //         MaterialPageRoute(builder: (context) => const Main_Calender()),
     //       );
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (c) => Main_Calendar(dday: widget._date!)));
+      builder: (c) => Main_Calendar(dday: widget._date!, name: widget._name,)));
       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('hello')));
     
 
@@ -177,7 +179,9 @@ showDialog(
                               context,
                               MaterialPageRoute(
                   builder: (context) => Main_Calendar(
-                          dday: widget._date!
+                          dday: widget._date!,
+                          name: widget._name,
+                          
                         )),
                             );
                           }, 

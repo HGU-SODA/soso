@@ -6,6 +6,7 @@ import 'package:soso/work_list.dart';
 import 'calendar.dart';
 import 'writing_page.dart';
 import 'onboarding_1.dart';
+import 'splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,9 +25,9 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home:  
-      // const onboarding_1()
+        Splash_Screen()
       // WList()
-       Main_Calendar(dday: DateTime.now(),)
+      //  Main_Calendar(dday: DateTime.now(),)
       // const writing_page()
       // MyHomePage(title: 'Flutter Demo Home Page'),
     );
