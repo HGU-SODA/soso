@@ -15,8 +15,9 @@ class Event {
   String content2;
   String content3;
   String emotion;
+  DateTime eventDay;
   
-  Event(this.content1,this.content2,this.content3, this.emotion);
+  Event(this.content1,this.content2,this.content3, this.emotion, this.eventDay);
   
   @override
   String toString() => title1+'\n'+content1+'\n'+title2+'\n'+content2+'\n'+title3+'\n'+content3;
@@ -24,23 +25,28 @@ class Event {
 
 }
 
+
+
+
 /// Example events.
 ///
 /// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
   equals: isSameDay,
   hashCode: getHashCode,
-)..addAll(_kEventSource);
+);
+// ..addAll(_kEventSource);
 
-final _kEventSource = { for (var item in List.generate(50, (index) => index)) DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5) : List.generate(
-        item % 4 + 1, (index) => Event('1','2','3','assets/soso_icon/icon_pink2.png'),) }
+final _kEventSource = 
+{ for (var item in List.generate(50, (index) => index)) DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5) : List.generate(
+        item % 4 + 1, (index) => Event('1','2','3','assets/soso_icon/icon_pink2.png',kToday),) }
   ..addAll({
     kToday: [
-      Event('1','2','3','assets/soso_icon/icon_blue2.png'),
-      Event('1','2','3','assets/soso_icon/icon_blue2.png'),
+      Event('1','2','3','assets/soso_icon/icon_blue2.png',kToday), 
+      Event('1','2','3','assets/soso_icon/icon_blue2.png',kToday),
     ],
     kFirstDay: [
-      Event('1','2','3-2','assets/soso_icon/icon_blue2.png')
+      Event('1','2','3-2','assets/soso_icon/icon_blue2.png',kToday)
     ]
   });
 

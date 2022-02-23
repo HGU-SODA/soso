@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'calender.dart';
+import 'calendar.dart';
 
 class onboarding_4 extends StatefulWidget {
   const onboarding_4({Key? key}) : super(key: key);
@@ -49,7 +49,7 @@ class _onboarding_4State extends State<onboarding_4> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Main_Calender()),
+                      MaterialPageRoute(builder: (context) =>  Main_Calendar(dday: DateTime.now(),)),
                     );
                   },
                   child: const Text(

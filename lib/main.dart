@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:soso/work_list.dart';
-import 'calender.dart';
+import 'calendar.dart';
 import 'writing_page.dart';
 import 'onboarding_1.dart';
 
@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home:  
-      // onboarding_1()
-      const onboarding_1()
+      // const onboarding_1()
       // WList()
+       Main_Calendar(dday: DateTime.now(),)
       // const writing_page()
       // MyHomePage(title: 'Flutter Demo Home Page'),
     );

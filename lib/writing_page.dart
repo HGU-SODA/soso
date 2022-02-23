@@ -1,7 +1,9 @@
 // ignore_for_file: camel_case_types
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:soso/calendar.dart';
 import 'main.dart';
 import 'utils.dart';
 
@@ -10,12 +12,8 @@ class writing_page extends StatefulWidget {
     required DateTime? date
     }) : _date = date, super(key: key);
   final DateTime? _date;
+  
 
-  // DateTimeInfo(DateTime date){
-  //   this._date = date;
-  // }
-
-  // DateTime this.date = date;
   @override
   _writing_pageState createState() => _writing_pageState();
 }
@@ -30,21 +28,63 @@ class _writing_pageState extends State<writing_page> {
   String text2 = '내용이 입력되지 않았습니다.';
   String text3 = '내용이 입력되지 않았습니다.';
 
-  var formatDate = DateFormat('yyyy/MM/dd').format(DateTime.now());
   
- final controller1 = TextEditingController();
-    final controller2 = TextEditingController();
-    final controller3 = TextEditingController();
+
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
 
-      @override
+     @override
   void initState() {
+
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) async {
       await EmotionDialog();
 
     });
   }
+
+  void popupInCalendar() {
+    // Navigator.push(
+    //         context,
+    //         MaterialPageRoute(builder: (context) => const Main_Calender()),
+    //       );
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (c) => Main_Calendar(dday: widget._date!)));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('hello')));
+    
+
+showDialog(
+  context: context,
+  builder: (context) {
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      Navigator.of(context).pop();
+    });
+
+    return AlertDialog(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+              content: Container(
+                alignment: Alignment.center,
+                width: 153,
+                height: 183,
+                child: const Image(
+                  image: AssetImage('assets/components/save1.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            );
+  }
+);
+        }
+            
+  
+
+ final controller1 = TextEditingController();
+    final controller2 = TextEditingController();
+    final controller3 = TextEditingController();
+
+
+ 
 
  @override
     void dispose(){
@@ -59,29 +99,31 @@ class _writing_pageState extends State<writing_page> {
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-
         if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
       child: Scaffold(
+        key: scaffoldKey,
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            const Image(
-          image: AssetImage('assets/bg2.png'),
-          fit: BoxFit.cover,
-        ),
-            Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+        body: SingleChildScrollView(
+          child: Stack(
             children: [
-              cancelButton(context),
-              dayAndEmotion(),
-              writingList(),
-              completeButton()
-            ],
-          ),]
+              const Image(
+            image: AssetImage('assets/bg2.png'),
+            fit: BoxFit.fill,
+          ),
+              Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                cancelButton(context),
+                dayAndEmotion(),
+                writingList(),
+                completeButton()
+              ],
+            ),]
+          ),
         ),
       ),
     );
@@ -95,7 +137,63 @@ class _writing_pageState extends State<writing_page> {
       alignment: Alignment.bottomLeft,
       child: IconButton(
         onPressed: () {
-          Navigator.pop(context);
+          showDialog(
+              context: context,
+              builder: (context) {
+                return  Stack(
+                  children: [Dialog(
+                    // elevation: 10,
+                  shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    child:SizedBox(
+                      width: 278,
+                      height: 118,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(top: 16,right: 19),
+                            // color: Colors.blue,
+                            // margin: EdgeInsets.only(top: 20),
+                            child: const Text(
+                              '정말 지우시겠습니까?\n기록이 다 없어질 지도 몰라요 :(',
+                              style: TextStyle(
+                                fontFamily: 'Medium', 
+                                fontSize:18,
+                                color: Color(0xff3E3E3E),
+                                height: 1.5
+                                ),)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    
+                          TextButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          }, 
+                          child: Text('아니오',style:TextStyle(fontFamily: 'Medium',fontSize: 16, color: Color(0xff556AAE)))),
+                          TextButton(
+                          onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                  builder: (context) => Main_Calendar(
+                          dday: widget._date!
+                        )),
+                            );
+                          }, 
+                          child: Text('네',style:TextStyle(fontFamily: 'Medium',fontSize: 16, color: Color(0xff556AAE)),)),
+                          // SizedBox(width: 20,)
+                                  ],
+                                ),
+                          
+                        ],
+                      ),
+                    ),
+                  ),]
+                );
+              });
+
+          
         },
         icon: const Image(image: AssetImage('assets/components/icon_x.png')),
         iconSize: 75,
@@ -110,7 +208,7 @@ class _writing_pageState extends State<writing_page> {
           width: 24,
         ),
         Text(
-          formatDate,
+          DateFormat('yyyy/MM/dd').format(widget._date!),
           style: const TextStyle(
             fontFamily: 'Bold',
             fontSize: 28,
@@ -138,74 +236,84 @@ class _writing_pageState extends State<writing_page> {
       barrierDismissible: false,
             context: context,
             builder: (BuildContext context) {
-              return Dialog(
-                backgroundColor: const Color(0xffF7F7F7),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                child: SizedBox(
-                  width: 315,
-                  height: 305,
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top:36 , bottom: 26),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          "회고 기록에 앞서,\n오늘의 업무 만족도를 선택해 주세요!",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(fontFamily: 'Medium', fontSize:20),
+        return Stack(
+          children: [
+            Dialog(
+            backgroundColor: const Color(0xffF7F7F7),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: SizedBox(
+              width: 315,
+              height: 305,
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(top:36 , bottom: 26),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "회고 기록에 앞서,\n오늘의 업무 만족도를 선택해 주세요!",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontFamily: 'Medium', fontSize:20),
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              emotionPath = smilePath;
-                            });
-                            Navigator.pop(context);
-                          },
-                          icon:  Image(
-                              image: AssetImage(
-                                  smilePath)),iconSize: 75,),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              emotionPath = sosoPath;
-                            });
-                            Navigator.pop(context);
-                          },
-                          icon:  Image(
-                              image: AssetImage(
-                                  sosoPath)),iconSize: 75),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              emotionPath = sadPath;
-                            });
-                            Navigator.pop(context);
-                          },
-                          icon:  Image(
-                              image: AssetImage(
-                                  sadPath)),iconSize: 75),
-                          
-                    ],
-                  ),
-                  const SizedBox(height: 22,),
-                  Row(children: const [
-                    Spacer(),
-                    Text('아주\n만족해요!',style: TextStyle(fontFamily: 'Medium',fontSize: 18),textAlign: TextAlign.center),
-                    Spacer(),
-                    Text('보통이에요.',style: TextStyle(fontFamily: 'Medium',fontSize: 18),),
-                    Spacer(),
-                    Text('조금\n아쉬워요.',style: TextStyle(fontFamily: 'Medium',fontSize: 18),textAlign: TextAlign.center,),
-                    Spacer(),
-                  ],),
-
-                    ],
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                emotionPath = smilePath;
+                              });
+                              Navigator.pop(context);
+                            },
+                            icon:  Image(
+                                image: AssetImage(
+                                    smilePath)),iconSize: 75,),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                emotionPath = sosoPath;
+                              });
+                              Navigator.pop(context);
+                            },
+                            icon:  Image(
+                                image: AssetImage(
+                                    sosoPath)),iconSize: 75),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                emotionPath = sadPath;
+                              });
+                              Navigator.pop(context);
+                            },
+                            icon:  Image(
+                                image: AssetImage(
+                                    sadPath)),iconSize: 75),
+                            
+                      ],
+                    ),
+                    const SizedBox(height: 22,),
+                    Row(children: const [
+                      Spacer(),
+                      Text('아주\n만족해요!',style: TextStyle(fontFamily: 'Medium',fontSize: 18),textAlign: TextAlign.center),
+                      Spacer(),
+                      Text('보통이에요.',style: TextStyle(fontFamily: 'Medium',fontSize: 18),),
+                      Spacer(),
+                      Text('조금\n아쉬워요.',style: TextStyle(fontFamily: 'Medium',fontSize: 18),textAlign: TextAlign.center,),
+                      Spacer(),
+                    ],),
+                
+                      ],
+                    ),
                   ),
                 ),
-              );
+              Container(
+              alignment: Alignment.topCenter,
+              margin: const EdgeInsets.only(top: 200),
+                child: const Image(
+                    image: AssetImage('assets/components/masking_tap.png'))),
+          ]
+        );
             },
           );
   }
@@ -222,17 +330,22 @@ class _writing_pageState extends State<writing_page> {
           if(controller1.text == '') text1 = '내용이 입력되지 않았습니다.';
           if(controller2.text == '') text2 = '내용이 입력되지 않았습니다.';
           if(controller3.text == '') text3 = '내용이 입력되지 않았습니다.';
-          kEvents.addAll({
+          
+          setState(() {
+            kEvents.addAll({
           widget._date!:[
-              Event(text1, text2, text3,emotionPath),
+              Event(text1, text2, text3,emotionPath,widget._date!),
             ],
-            // kToday: [
-            //   Event(text1, text2,text3,emotionPath),
-            //   // Event(controller1.toString(), controller2.toString(), controller3.toString(),emotionPath),
-            // ],
           });
-          // dispose();
+          });
+    //       scaffoldKey.currentState
+    // ?.showSnackBar(SnackBar(content: Text("Hello")));
           Navigator.pop(context);
+          popupInCalendar();
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const Main_Calender()),
+          // );
         },
         child: const Text(
           '완료',
@@ -245,13 +358,14 @@ class _writing_pageState extends State<writing_page> {
 
   Container writingList() {
     return Container(
-      // padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
       height: 540,
+      width: double.infinity,
       child: Stack(
         alignment: Alignment.topCenter,
         children:[
           const Image(
-            width: 370,
+            width: double.infinity,
           image: AssetImage('assets/components/memo.png'),
           fit: BoxFit.fill,
         ),

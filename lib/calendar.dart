@@ -8,16 +8,19 @@ import 'package:soso/writing_page.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'utils.dart';
+import 'work_list.dart';
 
-class Main_Calender extends StatefulWidget {
-  const Main_Calender({Key? key}) : super(key: key);
+class Main_Calendar extends StatefulWidget {
+  const Main_Calendar({Key? key, required DateTime dday}) : _dday =dday, super(key: key);
+
+  final DateTime? _dday;
 
   @override
-  _Main_CalenderState createState() => _Main_CalenderState();
+  Main_CalendarState createState() => Main_CalendarState();
 }
 
-class _Main_CalenderState extends State<Main_Calender> {
-  GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
+class Main_CalendarState extends State<Main_Calendar> {
+  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
 
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
@@ -34,7 +37,8 @@ class _Main_CalenderState extends State<Main_Calender> {
   @override
   void initState() {
     super.initState();
-
+    setState(() {});
+    _focusedDay = widget._dday!;
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
@@ -59,7 +63,7 @@ class _Main_CalenderState extends State<Main_Calender> {
     ];
   }
 
-  String returnKoreanDay(DateTime day) {
+  static String returnKoreanDay(DateTime day) {
     String? KDay = '';
     if (DateFormat('E').format(day) == 'Mon') {
       KDay = '월';
@@ -93,6 +97,7 @@ class _Main_CalenderState extends State<Main_Calender> {
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
+
   void _onDaySelected2(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
@@ -105,7 +110,7 @@ class _Main_CalenderState extends State<Main_Calender> {
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
-          Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
@@ -136,34 +141,33 @@ class _Main_CalenderState extends State<Main_Calender> {
       body: Stack(children: [
         const Image(
           image: AssetImage('assets/bg2.png'),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
         Center(
           child: Container(
-            height: 480,
+            height: 550,
             width: double.infinity,
-            margin: const EdgeInsets.only(top: 265, bottom: 20),
+            margin: const EdgeInsets.only(top: 240, bottom: 20),
             child: const Image(
               // alignment: Alignment.bottomCenter,
               image: AssetImage('assets/components/mainpage_memo.png'),
               fit: BoxFit.fill,
             ),
           ),
-        ),  
+        ),
         Column(
           children: [
             const SizedBox(
               height: 40,
             ),
-            
             Container(
                 margin: const EdgeInsets.only(left: 10),
                 alignment: Alignment.centerLeft,
-                child:
-                    IconButton(onPressed: () {
+                child: IconButton(
+                    onPressed: () {
                       _scaffoldState.currentState!.openDrawer();
-
-                    }, icon: const Icon(Icons.menu))),
+                    },
+                    icon: const Icon(Icons.menu))),
             calendar_section(),
             const SizedBox(height: 45.0),
             list_section(),
@@ -178,195 +182,263 @@ class _Main_CalenderState extends State<Main_Calender> {
 
   Drawer DrawerSection(BuildContext context) {
     return Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            // 프로젝트에 assets 폴더 생성 후 이미지 2개 넣기
-            // pubspec.yaml 파일에 assets 주석에 이미지 추가하기
-            ListTile(
-              contentPadding: const EdgeInsets.fromLTRB(22, 45, 35, 33),
-              title: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          // 프로젝트에 assets 폴더 생성 후 이미지 2개 넣기
+          // pubspec.yaml 파일에 assets 주석에 이미지 추가하기
+          ListTile(
+            contentPadding: const EdgeInsets.fromLTRB(22, 45, 35, 33),
+            title: Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                ),
+                Image(
+                  image: AssetImage('assets/soso_character/soso_main.png'),
+                  height: 56,
+                  width: 56,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 16),
+                ),
+                Text(
+                  '은비',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Bold',
                   ),
-                  Image(image:
-                    AssetImage('assets/soso_character/soso_main.png'),
-                    height: 56,
-                    width: 56,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 16),
-                  ),
-                  Text(
-                    '은비',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontFamily: 'Bold',
-                    ),
-                  ),
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
+                ),
+              ],
             ),
-            const Center(
-              child: SizedBox(
-                  width: 283,
-                  child:
-                      Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          const Center(
+            child: SizedBox(
+                width: 283,
+                child:
+                    Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
+          ),
+          ListTile(
+            title: Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                ),
+                Text(
+                  '질문들',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Bold',
+                  ),
+                )
+              ],
             ),
-            ListTile(
-              title: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
+            onTap: () {
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 4),
+          ),
+          ListTile(
+            title: Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                ),
+                Image(
+                  image: AssetImage('assets/components/folder.png'),
+                  height: 16,
+                  width: 16,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 12),
+                ),
+                Text(
+                  '진행한 일',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Medium',
                   ),
-                  Text(
-                    '질문들',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Bold',
-                    ),
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
+                )
+              ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 4),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WList(
+                          content: 'content1',
+                        )),
+              );
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 4),
+          ),
+          ListTile(
+            title: Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                ),
+                Image(
+                  image: AssetImage('assets/components/folder.png'),
+                  height: 16,
+                  width: 16,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 12),
+                ),
+                Text(
+                  '잘한 점/아쉬운 점',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Medium',
+                  ),
+                )
+              ],
             ),
-            ListTile(
-              title: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WList(
+                          content: 'content2',
+                        )),
+              );
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 4),
+          ),
+          ListTile(
+            title: Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                ),
+                Image(
+                  image: AssetImage('assets/components/folder.png'),
+                  height: 16,
+                  width: 16,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 12),
+                ),
+                Text(
+                  '개선할 점',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'Medium',
                   ),
-                  Image(image:
-                    AssetImage('assets/components/folder.png'),
-                    height: 16,
-                    width: 16,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 12),
-                  ),
-                  Text(
-                    '진행한 일',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Medium',
-                    ),
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
+                ),
+              ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 4),
-            ),
-            ListTile(
-              title: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                  ),
-                  Image(image:
-                    AssetImage('assets/components/folder.png'),
-                    height: 16,
-                    width: 16,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 12),
-                  ),
-                  Text(
-                    '잘한 점/아쉬운 점',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Medium',
-                    ),
-                  )
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 4),
-            ),
-            ListTile(
-              title: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10),
-                  ),
-                  Image(image:
-                    AssetImage('assets/components/folder.png'),
-                    height: 16,
-                    width: 16,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(right: 12),
-                  ),
-                  Text(
-                    '개선할 점',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Medium',
-                    ),
-                  ),
-                ],
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 4),
-            ),
-            const Center(
-              child: SizedBox(
-                  width: 283,
-                  child:
-                      Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
-            ),
-          ],
-        ),
-      );
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WList(
+                          content: 'content3',
+                        )),
+              );
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 4),
+          ),
+          const Center(
+            child: SizedBox(
+                width: 283,
+                child:
+                    Divider(thickness: 0.5, height: 0.5, color: Colors.grey)),
+          ),
+        ],
+      ),
+    );
   }
 
   Expanded list_section() {
     return Expanded(
       child: ValueListenableBuilder<List<Event>>(
         valueListenable: _selectedEvents,
-        builder: (context, value, _) {
-          return ListView.builder(
-            itemCount: value.length,
-            itemBuilder: (context, index) {
-              return (false)
-                  ? Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      child: ListTile(
-                        title: Column(
-                          children:  [
-                            Text(value.toString()),
-                            const Image(
-                              image: AssetImage(
-                                  'assets/soso_character/soso_main.png'),
+        builder: (context, value, Widget? child) {
+          if (value.length == 0) {
+            return ListTile(
+              title: Column(
+                children: [
+                  Container(
+                    width: 120,
+                    height: 120,
+                    margin: EdgeInsets.symmetric(vertical: 30),
+                    child: const Image(
+                      image: AssetImage('assets/soso_character/soso_main.png'),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 18, 0, 12),
+                    child: const Text('오늘의 회고가 아직 등록되지 않았어요!',
+                    style: TextStyle(
+                                        fontFamily: 'Medium', fontSize: 20,color: Color(0xff50555C))),
+                  ),
+                  const Text('회고를 적으러 가볼까요?',
+                  style: TextStyle(
+                                      fontFamily: 'Medium', fontSize: 20,color: Color(0xff50555C))),
+                  Center(
+                    child: Container(
+                      width: 280,
+                      margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => writing_page(
+                                      date: _selectedDay,
+                                    )),
+                          );
+                          
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                                width: 230,
+                                child: Text(
+                                  ' 오늘의 회고 적으러 가기',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'Medium', fontSize: 24,color: Color(0xff3E3E3E)),
+                                )),
+                            Container(
+                              margin: const EdgeInsets.only(right: 0),
+                              child: const Image(
+                                image: AssetImage(
+                                    'assets/components/pencil_m.png'),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                    )
-                  : Container(
+                      decoration: const BoxDecoration(
+                          border: Border(
+                        bottom: BorderSide(width: 3),
+                      )),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: value.length,
+            itemBuilder: (context, index) {
+              return Container(
                       margin: const EdgeInsets.fromLTRB(12.0, 0, 12, 0),
                       child: ListTile(
                         title: Column(
@@ -433,7 +505,6 @@ class _Main_CalenderState extends State<Main_Calender> {
                         ),
                       ),
                     );
-
             },
           );
         },
@@ -466,7 +537,7 @@ class _Main_CalenderState extends State<Main_Calender> {
                   calendarFormat: CalendarFormat.month,
                   rangeSelectionMode: _rangeSelectionMode,
                   eventLoader: _getEventsForDay,
-                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  startingDayOfWeek: StartingDayOfWeek.sunday,
                   rowHeight: 70,
                   headerStyle: const HeaderStyle(
                       leftChevronVisible: true,
@@ -477,132 +548,93 @@ class _Main_CalenderState extends State<Main_Calender> {
                         fontSize: 24,
                       )),
                   calendarBuilders: CalendarBuilders(
-                    todayBuilder: (context, day, focusedDay)  {
-                      if(_getEventsForDay(day).isEmpty){
-                        return Column(
-                        children: [
-                           const SizedBox(
-                            width: 40,
-                            height: 40,
-                          ),
-                          Text(
-                            day.day.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
-                          )
-                        ],
-                      );
-                      }
+                    todayBuilder: (context, day, focusedDay) {
                       return Column(
                         children: [
-                           SizedBox(
+                          SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image(image: AssetImage(_getEventsForDay(day)[0].emotion),),
+                            child: (_getEventsForDay(day).isNotEmpty)
+                                ? Image(
+                                    image: AssetImage(
+                                        _getEventsForDay(day)[0].emotion))
+                                : null,
                           ),
                           Text(
                             day.day.toString(),
-                            
                             style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
+                              fontFamily: 'Medium',
+                              color: Color(0xff818181),
+                              fontSize: 12,
+                            ),
                           )
                         ],
                       );
                     },
                     defaultBuilder: (context, day1, day2) {
-                      if(_getEventsForDay(day1).isEmpty){
-                        return Column(
-                        children: [
-                           const SizedBox(
-                            width: 40,
-                            height: 40,
-                          ),
-                          Text(
-                            day1.day.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
-                          )
-                        ],
-                      );
-                      }
                       return Column(
                         children: [
-                           SizedBox(
+                          SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image(image: AssetImage(_getEventsForDay(day1)[0].emotion),),
+                            child: (_getEventsForDay(day1).isNotEmpty)
+                                ? Image(
+                                    image: AssetImage(
+                                        _getEventsForDay(day1)[0].emotion))
+                                : null,
                           ),
                           Text(
                             day1.day.toString(),
-                            
                             style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
+                                fontFamily: 'Medium', fontSize: 12, color: Color(0xff818181),),
                           )
                         ],
                       );
                     },
                     outsideBuilder: (context, day1, day2) {
-                      if(_getEventsForDay(day1).isEmpty){
-                        return Column(
-                        children: [
-                           const SizedBox(
-                            width: 40,
-                            height: 40,
-                          ),
-                          Text(
-                            day1.day.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
-                          )
-                        ],
-                      );
-                      }
                       return Column(
                         children: [
-                           SizedBox(
+                          SizedBox(
                             width: 40,
                             height: 40,
-                            child: Image(image: AssetImage(_getEventsForDay(day1)[0].emotion),),
+                            child: (_getEventsForDay(day1).isEmpty)
+                                ? Image(
+                                    image: AssetImage(
+                                        _getEventsForDay(day1)[0].emotion))
+                                : null,
                           ),
                           Text(
                             day1.day.toString(),
                             style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
+                                fontFamily: 'Medium', fontSize: 12,color: Color(0xff818181)),
                           )
                         ],
                       );
                     },
                     selectedBuilder: (context, day1, day2) {
-                      if(_getEventsForDay(day1).isEmpty){
-                        return Column(
-                        children: [
-                           const SizedBox(
-                            width: 40,
-                            height: 40,
-                          ),
-                          Text(
-                            day1.day.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12,
-                                decoration: TextDecoration.underline,),
-                          )
-                        ],
-                      );
-                      }
-                      return Column(
-                        children: [
-                           SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: Image(image: AssetImage(_getEventsForDay(day1)[0].emotion),),
-                          ),
-                          Text(
-                            day1.day.toString(),
-                            style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12,
-                                decoration: TextDecoration.underline,),
-                          )
-                        ],
+                      return Container(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 40,
+                              height: 40,
+                              child: (_getEventsForDay(day1).isNotEmpty)
+                                  ? Image(
+                                      image: AssetImage(
+                                          _getEventsForDay(day1)[0].emotion))
+                                  : null,
+                            ),
+                            Text(
+                              day1.day.toString(),
+                              style: const TextStyle(
+                                fontFamily: 'Medium',
+                                fontSize: 12,
+                                color: Color(0xff818181),
+                                decoration: TextDecoration.underline,
+                              ),
+                            )
+                          ],
+                        ),
                       );
                     },
                     markerBuilder: (context, date, list) {
@@ -645,7 +677,7 @@ class _Main_CalenderState extends State<Main_Calender> {
                           Text(
                             day.day.toString(),
                             style: const TextStyle(
-                                fontFamily: 'Medium', fontSize: 12),
+                                fontFamily: 'Medium', fontSize: 12, color: Color(0xff818181),),
                           )
                         ],
                       );
@@ -694,7 +726,7 @@ class _Main_CalenderState extends State<Main_Calender> {
       calendarFormat: _calendarFormat,
       rangeSelectionMode: _rangeSelectionMode,
       eventLoader: _getEventsForDay,
-      startingDayOfWeek: StartingDayOfWeek.monday,
+      startingDayOfWeek: StartingDayOfWeek.sunday,
       rowHeight: 70,
       headerStyle: const HeaderStyle(
           leftChevronVisible: false,
@@ -705,31 +737,61 @@ class _Main_CalenderState extends State<Main_Calender> {
           )),
       calendarBuilders: CalendarBuilders(
         todayBuilder: (context, day, focusedDay) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              day.day.toString(),
-              style: const TextStyle(fontFamily: 'Medium', fontSize: 12,
-              decoration: TextDecoration.underline,),
-            ),
+          return Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 4),
+                width: 40,
+                height: 40,
+                child: (_getEventsForDay(day).isEmpty)
+                    ? null
+                    : Image(
+                        image: AssetImage(
+                          _getEventsForDay(day)[0].emotion,
+                        ),
+                      ),
+              ),
+              Text(
+                day.day.toString(),
+                style: const TextStyle(
+                  fontFamily: 'Medium',
+                  fontSize: 12,
+                  color: Color(0xff818181),
+                ),
+              )
+            ],
           );
+          // Container(
+          //   margin: const EdgeInsets.only(bottom: 4),
+          //   child: Text(
+          //     day.day.toString(),
+          //     style: const TextStyle(fontFamily: 'Medium', fontSize: 12,
+          //     decoration: TextDecoration.underline,),
+          //   ),
+          // );
         },
         defaultBuilder: (context, day1, day2) {
           return Column(
             children: [
-              const SizedBox(
-                height: 8,
-              ),
-              const SizedBox(
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 4),
                 width: 40,
                 height: 40,
-              ),
-              const SizedBox(
-                height: 6,
+                child: (_getEventsForDay(day1).isEmpty)
+                    ? null
+                    : Image(
+                        image: AssetImage(
+                          _getEventsForDay(day1)[0].emotion,
+                        ),
+                      ),
               ),
               Text(
                 day1.day.toString(),
-                style: const TextStyle(fontFamily: 'Medium', fontSize: 12),
+                style: const TextStyle(
+                  fontFamily: 'Medium',
+                  color: Color(0xff818181),
+                  fontSize: 12,
+                ),
               )
             ],
           );
@@ -737,19 +799,25 @@ class _Main_CalenderState extends State<Main_Calender> {
         outsideBuilder: (context, day1, day2) {
           return Column(
             children: [
-              const SizedBox(
-                height: 8,
-              ),
-              const SizedBox(
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 4),
                 width: 40,
                 height: 40,
-              ),
-              const SizedBox(
-                height: 6,
+                child: (_getEventsForDay(day1).isEmpty)
+                    ? null
+                    : Image(
+                        image: AssetImage(
+                          _getEventsForDay(day1)[0].emotion,
+                        ),
+                      ),
               ),
               Text(
                 day1.day.toString(),
-                style: const TextStyle(fontFamily: 'Medium', fontSize: 12),
+                style: const TextStyle(
+                  fontFamily: 'Medium',
+                  fontSize: 12,
+                  // decoration: TextDecoration.underline,
+                ),
               )
             ],
           );
@@ -757,49 +825,61 @@ class _Main_CalenderState extends State<Main_Calender> {
         selectedBuilder: (context, day1, day2) {
           return Column(
             children: [
-              const SizedBox(
-                width: 54,
-                height: 54,
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 0),
+                width: 48,
+                height: 48,
+                child: (_getEventsForDay(day1).isEmpty)
+                    ? null
+                    : Image(
+                        image: AssetImage(
+                          _getEventsForDay(day1)[0].emotion,
+                        ),
+                      ),
               ),
               Text(
                 day1.day.toString(),
-                style: TextStyle(fontFamily: 'Medium', fontSize: 12,
-                decoration:  (day1.day == DateTime.now().day) ? TextDecoration.underline : null
+                style: const TextStyle(
+                  fontFamily: 'Medium',
+                  fontSize: 12,
+                  color: Color(0xff3E3E3E),
+                  decoration: TextDecoration.underline,
                 ),
               )
             ],
           );
         },
         markerBuilder: (context, date, list) {
-          if (list.isEmpty) return Container();
-          String emotion = list[0].emotion;
+          // if (list.isEmpty)
+          return Container();
+          // String emotion = list[0].emotion;
 
-          if (date == _selectedDay) {
-            return Positioned(
-              top: 0,
-              child: SizedBox(
-                  width: 54,
-                  height: 54,
-                  child: Image(
-                    image: AssetImage(emotion),
-                  )),
-            );
-          }
-          return Positioned(
-            top: 6,
-            child: SizedBox(
-                width: 40,
-                height: 40,
-                child: Image(
-                  image: AssetImage(emotion),
-                )),
-          );
+          // if (date == _selectedDay) {
+          //   return Positioned(
+          //     top: 0,
+          //     child: SizedBox(
+          //         width: 54,
+          //         height: 54,
+          //         child: Image(
+          //           image: AssetImage(emotion),
+          //         )),
+          //   );
+          // }
+          // return Positioned(
+          //   top: 6,
+          //   child: SizedBox(
+          //       width: 40,
+          //       height: 40,
+          //       child: Image(
+          //         image: AssetImage(emotion),
+          //       )),
+          // );
         },
         dowBuilder: (context, day) {
           return Center(
               child: Text(
             returnKoreanDay(day),
-            style: const TextStyle(fontFamily: 'Medium', fontSize: 12),
+            style: const TextStyle(fontFamily: 'Medium', fontSize: 12, color: Color(0xff818181),),
           ));
         },
         headerTitleBuilder: (context, day) {
@@ -812,17 +892,17 @@ class _Main_CalenderState extends State<Main_Calender> {
                 DateFormat('yyyy년 MM월').format(day),
                 style: const TextStyle(fontFamily: 'Bold', fontSize: 24),
               ),
-              // const Spacer(),
-              const SizedBox(
-                width: 100,
-              ),
+              const Spacer(),
+              // const SizedBox(
+              //   width: 100,
+              // ),
               IconButton(
                   padding: const EdgeInsets.only(left: 30),
                   // alignment: Alignment.centerRight,
                   iconSize: 48,
                   onPressed: () {
-                    Navigator.push(
-                      context,
+                    Navigator.pop(context);
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                           builder: (context) => writing_page(
                                 date: _selectedDay,
@@ -848,19 +928,18 @@ class _Main_CalenderState extends State<Main_Calender> {
         disabledBuilder: (context, day, focusedDay) {
           return Column(
             children: [
-              const SizedBox(
-                height: 8,
-              ),
-              const SizedBox(
-                width: 40,
-                height: 40,
-              ),
-              const SizedBox(
-                height: 6,
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 0),
+                width: 48,
+                height: 48,
               ),
               Text(
                 day.day.toString(),
-                style: const TextStyle(fontFamily: 'Medium', fontSize: 12),
+                style: const TextStyle(
+                  fontFamily: 'Medium',
+                  fontSize: 12,
+                  color: Color(0xff818181),
+                ),
               )
             ],
           );
@@ -884,9 +963,6 @@ class _Main_CalenderState extends State<Main_Calender> {
           decoration: TextDecoration.underline,
         ),
         defaultTextStyle: TextStyle(fontFamily: 'Bold'),
-        // rangeEndTextStyle: TextStyle(fontFamily: 'Bold'),
-        // rangeStartTextStyle: TextStyle(fontFamily: 'Bold'),
-        // withinRangeTextStyle: TextStyle(fontFamily: 'Bold'),
       ),
       onDaySelected: _onDaySelected,
       // onRangeSelected: _onRangeSelected,
